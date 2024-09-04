@@ -21,20 +21,6 @@ const LogoImage = styled('img')`
   height: 50%;
 `;
 
-const Heading = styled(Typography)`
-  font-size: 70px;
-  color: DarkBlue;
-  line-height: 1;
-`;
-
-const SubHeading = styled(Typography)`
-  font-size: 20px;
-  background: Cyan;
-  border-radius: 15px;
-  padding: 3px;
-  color: DarkBlue;
-`;
-
 const Banner = () => {
   const url = '/logo.png';
   return (
