@@ -26,7 +26,7 @@ const About = () => {
             <Image src={url} alt="post" />
             <Wrapper>
                 <Typography variant="h3">Garv Kadia</Typography>
-                <Text variant="h5">I'm a Software Developr based in India.
+                <Text variant="h5">I'm a Software Developer based in India.
                     I've built websites.<br />
                     If you are interested, you can view some of my favorite projects here
                     <Box component="span" style={{ marginLeft: 5 }}>

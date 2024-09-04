@@ -13,6 +13,18 @@ const Component = styled(AppBar)`
 `;
 
 const Linked = styled(Link)`
+color: #000;
+    &:hover {
+    text-decoration: underline;
+    
+`;
+
+const LoBtn = styled(Button)`
+     background: red;
+     color: cyan;
+     margin : 5px;
+    //  padding: 50px
+     border-radius: 20px;
     &:hover {
     text-decoration: underline;
 `;
@@ -21,7 +33,6 @@ const Container = styled(Toolbar)`
     justify-content: center;
     & > a {
         padding: 20px;
-        color: #000;
         text-decoration: none;
     }
 `
@@ -36,17 +47,20 @@ const Header = () => {
 
     const navigate = useNavigate();
 
-    const logout = async () => navigate('/account');
+    const logout = async () => navigate('/login');
+
+    
+    const loBtn = async () => navigate('/');
         
     return (
         <Component>
              <Toolbar>
-                <Logo src='/logo.png' alt='Logo' /> {/* Path to your logo */}
+                <Logo src='/logo.png' onClick={loBtn} alt='Logo' />
                 <Container>
                     <Linked to='/'>HOME</Linked>
                     <Linked to='/about'>ABOUT</Linked>
                     <Linked to='/contact'>CONTACT</Linked>
-                    <Linked to='/login' onClick={logout}>LOGOUT</Linked>
+                    <LoBtn to='/login' onClick={logout}>LOGOUT</LoBtn>
                 </Container>
             </Toolbar>
         </Component>
