@@ -1,5 +1,4 @@
 
-
 import { Button, Table, TableHead, TableRow, TableCell, TableBody, styled } from '@mui/material';
 import { Link, useSearchParams } from 'react-router-dom';
 
@@ -17,28 +16,28 @@ const StyledButton = styled(Button)`
     text-decoration: none;
 `;
     
-// const StyledLink = styled(Link)`
-//     text-decoration: none;
-//     color: inherit;
-// `;
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+`;
 
 const Categories = () => {
-    // const [searchParams] = useSearchParams();
-    // const category = searchParams.get('category');
+    const [searchParams] = useSearchParams();
+    const category = searchParams.get('category');
     
     return (
         <>
-            {/* <Link to={`/create?category=${category || ''}`} style={{ textDecoration: 'none' }}> */}
+            <Link to={`/create?category=${category || ''}`} style={{ textDecoration: 'none' }}>
                 <StyledButton variant="contained">Create Blog</StyledButton>
-            {/* </Link> */}
+            </Link>
             
             <StyledTable>
                 <TableHead>
                     <TableRow>
                         <TableCell>
-                            {/* <StyledLink to={"/"}> */}
+                            <StyledLink to={"/"}>
                                 All Categories
-                            {/* </StyledLink> */}
+                            </StyledLink>
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -47,9 +46,9 @@ const Categories = () => {
                         categories.map(category => (
                             <TableRow key={category.id}>
                                 <TableCell>
-                                    {/* <StyledLink to={`/?category=${category.type}`}> */}
+                                    <StyledLink to={`/?category=${category.type}`}>
                                         {category.type}
-                                    {/* </StyledLink> */}
+                                    </StyledLink>
                                 </TableCell>
                             </TableRow>
                         ))

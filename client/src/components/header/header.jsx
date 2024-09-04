@@ -6,8 +6,15 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Component = styled(AppBar)`
-    background: #FFFFFF;
+    background: lightgrey;
     color: black;
+    font-weight: bold;
+      
+`;
+
+const Linked = styled(Link)`
+    &:hover {
+    text-decoration: underline;
 `;
 
 const Container = styled(Toolbar)`
@@ -19,6 +26,12 @@ const Container = styled(Toolbar)`
     }
 `
 
+const Logo = styled('img')`
+    height: 40px; /* Adjust the size of the logo as needed */
+    margin-right: auto; /* Pushes the logo to the left */
+`;
+
+
 const Header = () => {
 
     const navigate = useNavigate();
@@ -27,12 +40,15 @@ const Header = () => {
         
     return (
         <Component>
-            <Container>
-                <Link to='/'>HOME</Link>
-                <Link to='/about'>ABOUT</Link>
-                <Link to='/contact'>CONTACT</Link>
-                <Link to='/account'>LOGOUT</Link>
-            </Container>
+             <Toolbar>
+                <Logo src='/logo.png' alt='Logo' /> {/* Path to your logo */}
+                <Container>
+                    <Linked to='/'>HOME</Linked>
+                    <Linked to='/about'>ABOUT</Linked>
+                    <Linked to='/contact'>CONTACT</Linked>
+                    <Linked to='/login' onClick={logout}>LOGOUT</Linked>
+                </Container>
+            </Toolbar>
         </Component>
     )
 }

@@ -11,16 +11,19 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Component = styled(Box)`
-    width: 400px;
-    margin: auto;
-    box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+  width: 400px;
+  margin: 0 auto; 
+  margin-top: -25px; 
+  box-shadow: 5px 2px 5px 2px rgb(0 0 0 / 0.6);
 `;
 
 const Image = styled('img')({
-    width: 100,
+    width: 300,
+    height: 150,
     display: 'flex',
     margin: 'auto',
-    padding: '50px 0 0'
+    padding: '50px 0 0',
+    
 });
 
 const Wrapper = styled(Box)`
@@ -83,7 +86,7 @@ const signupInitialValues = {
 
 const Login = ({isUserAuthenticated}) => {
 
-    const imageURL = 'https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png';
+    const imageURL = '/logo.png';
 
 
     const [account, toggleAccount] = useState('login');
