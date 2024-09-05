@@ -1,5 +1,6 @@
-import { Box, TextField, Button, styled, Typography } from '@mui/material';
-import { useState, useContext } from 'react';
+import { Box, TextField, Button, styled, Typography, IconButton, InputAdornment, } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React,{ useState, useContext } from 'react';
 
 
 import { API } from '../../service/api';
@@ -88,7 +89,7 @@ const Login = ({isUserAuthenticated}) => {
 
     const imageURL = '/logo.png';
 
-
+    const [showPassword, setShowPassword] = useState(false);
     const [account, toggleAccount] = useState('login');
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues);
@@ -101,7 +102,10 @@ const Login = ({isUserAuthenticated}) => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
     }
 
-
+    const handleClickShowPassword = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+      };
+      
     const onInputChange = (e) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     }
@@ -153,8 +157,23 @@ const Login = ({isUserAuthenticated}) => {
 
                         <Wrapper>
                             <TextField variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
-                            <TextField variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
-
+                            <TextField
+        variant="standard"
+        value={login.password}
+        onChange={onValueChange}
+        name="password"
+        label="Enter Password"
+        type={showPassword ? 'text' : 'password'}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleClickShowPassword}>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
                             
                             {error && <Error>{error}</Error>}
 
