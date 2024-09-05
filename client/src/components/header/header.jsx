@@ -60,7 +60,7 @@ const Header = () => {
                     <Linked to='/'>HOME</Linked>
                     <Linked to='/about'>ABOUT</Linked>
                     <Linked to='/contact'>CONTACT</Linked>
-                    <LoBtn to='/login' onClick={logout}>LOGOUT</LoBtn>
+                    <a><LoBtn to='/login' onClick={logout}>LOGOUT</LoBtn></a>
                 </Container>
             </Toolbar>
         </Component>

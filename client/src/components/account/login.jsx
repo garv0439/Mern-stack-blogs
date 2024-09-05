@@ -1,4 +1,4 @@
-import { Box, TextField, Button, styled, Typography, IconButton, InputAdornment, } from '@mui/material';
+import { Box, TextField, Button, styled, Typography, IconButton, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import React,{ useState, useContext } from 'react';
 
@@ -94,7 +94,9 @@ const Login = ({isUserAuthenticated}) => {
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues);
     const [error, showError] = useState('');
-
+    const [success, setSuccess] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    
     const { setAccount } = useContext(DataContext);
     const navigate = useNavigate();
 
@@ -120,13 +122,17 @@ const Login = ({isUserAuthenticated}) => {
             sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
             setAccount({ name: response.data.name, username: response.data.username });
             
-            isUserAuthenticated(true)
-            // setLogin(loginInitialValues);
-            navigate('/');
+            isUserAuthenticated(true);
+            setSuccessMessage('Login Successful!');
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);
+                navigate('/');
+            }, 1000);
         } else {
             showError('Something went wrong! please try again later');
         }
-    }
+    };
 
 
 
@@ -135,11 +141,16 @@ const Login = ({isUserAuthenticated}) => {
         if (response.isSuccess) {
             showError('');
             setSignup(signupInitialValues);
-            toggleAccount('login');
+            setSuccessMessage('Signup Successful!');
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);
+                toggleAccount('login');
+            }, 1000);
         } else {
             showError('Something went wrong! please try again later');
         }
-    }
+    };
 
 
     const onValueChange = (e) => {
@@ -197,6 +208,17 @@ const Login = ({isUserAuthenticated}) => {
                 }
             </Box>
 
+ {/* Snackbar for success message */}
+ <Snackbar
+                open={success}
+                autoHideDuration={1000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                onClose={() => setSuccess(false)}
+            >
+                <Alert onClose={() => setSuccess(false)} severity="success" sx={{ width: '100%' }}>
+                    {successMessage}
+                </Alert>
+            </Snackbar>
 
         </Component>
     )
