@@ -1,14 +1,11 @@
 import { Box, TextField, Button, styled, Typography, IconButton, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import React,{ useState, useContext } from 'react';
-
+import React, { useState, useContext } from 'react';
 
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 
-
 import { useNavigate } from 'react-router-dom';
-
 
 
 const Component = styled(Box)`
@@ -24,7 +21,7 @@ const Image = styled('img')({
     display: 'flex',
     margin: 'auto',
     padding: '50px 0 0',
-    
+
 });
 
 const Wrapper = styled(Box)`
@@ -73,8 +70,6 @@ const loginInitialValues = {
     password: ''
 };
 
-
-
 const signupInitialValues = {
     name: '',
     username: '',
@@ -83,9 +78,7 @@ const signupInitialValues = {
 
 
 
-
-
-const Login = ({isUserAuthenticated}) => {
+const Login = ({ isUserAuthenticated }) => {
 
     const imageURL = '/logo.png';
 
@@ -96,7 +89,7 @@ const Login = ({isUserAuthenticated}) => {
     const [error, showError] = useState('');
     const [success, setSuccess] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
-    
+
     const { setAccount } = useContext(DataContext);
     const navigate = useNavigate();
 
@@ -106,12 +99,11 @@ const Login = ({isUserAuthenticated}) => {
 
     const handleClickShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
-      };
-      
+    };
+
     const onInputChange = (e) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     }
-
 
     const loginUser = async () => {
         let response = await API.userLogin(login);
@@ -121,7 +113,7 @@ const Login = ({isUserAuthenticated}) => {
             sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
             sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
             setAccount({ name: response.data.name, username: response.data.username });
-            
+
             isUserAuthenticated(true);
             setSuccessMessage('Login Successful!');
             setSuccess(true);
@@ -133,8 +125,6 @@ const Login = ({isUserAuthenticated}) => {
             showError('Something went wrong! please try again later');
         }
     };
-
-
 
     const signupUser = async () => {
         let response = await API.userSignup(signup);
@@ -158,7 +148,6 @@ const Login = ({isUserAuthenticated}) => {
     }
 
 
-
     return (
         <Component>
             <Box>
@@ -169,23 +158,23 @@ const Login = ({isUserAuthenticated}) => {
                         <Wrapper>
                             <TextField variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
                             <TextField
-        variant="standard"
-        value={login.password}
-        onChange={onValueChange}
-        name="password"
-        label="Enter Password"
-        type={showPassword ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleClickShowPassword}>
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-                            
+                                variant="standard"
+                                value={login.password}
+                                onChange={onValueChange}
+                                name="password"
+                                label="Enter Password"
+                                type={showPassword ? 'text' : 'password'}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={handleClickShowPassword}>
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+
                             {error && <Error>{error}</Error>}
 
 
@@ -208,8 +197,8 @@ const Login = ({isUserAuthenticated}) => {
                 }
             </Box>
 
- {/* Snackbar for success message */}
- <Snackbar
+            {/* Snackbar for success message */}
+            <Snackbar
                 open={success}
                 autoHideDuration={1000}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
