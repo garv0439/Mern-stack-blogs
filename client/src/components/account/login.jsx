@@ -115,7 +115,7 @@ const Login = ({ isUserAuthenticated }) => {
             setAccount({ name: response.data.name, username: response.data.username });
 
             isUserAuthenticated(true);
-            setSuccessMessage('Login Successful!');
+            setSuccessMessage('Login Successfull!');
             setSuccess(true);
             setTimeout(() => {
                 setSuccess(false);
