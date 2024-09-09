@@ -5,7 +5,7 @@ import { uploadImage, getImage } from '../controller/image-controller.js';
 import { newComment, getComments, deleteComment } from '../controller/comment-controller.js';
 import { loginUser, singupUser } from '../controller/user-controller.js';
 import { authenticateToken } from '../controller/jwt-controller.js';
-
+import { addLike, getLikesCount, removeLike } from '../controller/like-controller.js';
 
 import upload from '../utils/upload.js';
     
@@ -31,6 +31,12 @@ router.delete('/delete/:id', authenticateToken, deletePost);
 router.post('/comment/new', authenticateToken, newComment);
 router.get('/comments/:id', authenticateToken, getComments);
 router.delete('/comment/delete/:id', authenticateToken, deleteComment);
+
+
+router.post('/like', addLike);              
+router.get('/like/count', getLikesCount);   
+router.delete('/like', removeLike);      
+
 
 
 export default router;

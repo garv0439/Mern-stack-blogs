@@ -11,6 +11,7 @@ import { DataContext } from '../../context/DataProvider';
 
 // components
 import Comments from './comments/comments';
+import LikeButton from './likes/like';
 
 const Container = styled(Box)(({ theme }) => ({
     margin: '50px 100px',
@@ -82,6 +83,7 @@ const DetailView = () => {
     return (
         <Container>
             <Image src={post.picture || url} alt="post" />
+            <LikeButton />
             <Box style={{ float: 'right' }}>
                 {   
                     account.username === post.username && 

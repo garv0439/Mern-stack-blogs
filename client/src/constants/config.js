@@ -37,5 +37,8 @@ export const SERVICE_URLS = {
     newComment: { url: '/comment/new', method: 'POST' },
     getAllComments: { url: 'comments', method: 'GET', query: true },
     deleteComment: { url: 'comment/delete', method: 'DELETE', query: true },
+    likePost: { method: 'POST', url: '/like' },
+    unlikePost: { method: 'DELETE', url: '/like' },  
+    getLikes: { url: '/like/count', method: 'GET' }, 
     // getRefreshToken: { url: '/token', method: 'POST' },
 }
