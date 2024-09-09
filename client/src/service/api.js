@@ -89,7 +89,39 @@ const ProcessError = async (error) => {
     }
 }
 
-const API = {};
+const API = {
+    // Like a post
+    likePost: (postId) =>
+        axiosInstance({
+            method: 'POST',
+            url: '/likes', // Adjust the URL to your endpoint
+            data: { postId },
+            headers: {
+                authorization: getAccessToken(),
+            }
+        }),
+    
+    // Unlike a post
+    unlikePost: (postId) =>
+        axiosInstance({
+            method: 'DELETE',
+            url: '/likes', // Adjust the URL to your endpoint
+            data: { postId },
+            headers: {
+                authorization: getAccessToken(),
+            }
+        }),
+    
+    // Get likes count for a post
+    getLikesCount: (postId) =>
+        axiosInstance({
+            method: 'GET',
+            url: `/likes/count/${postId}`, // Adjust the URL to your endpoint
+            headers: {
+                authorization: getAccessToken(),
+            }
+        })
+};
 
 for (const [key, value] of Object.entries(SERVICE_URLS)) {
     API[key] = (body, showUploadProgress, showDownloadProgress) =>
