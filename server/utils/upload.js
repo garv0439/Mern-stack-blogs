@@ -14,8 +14,8 @@ const storage = new GridFsStorage({
     file: (request, file) => {
         const match = ["image/png", "image/jpg"];
 
-        if(match.indexOf(file.mimitype) === -1) 
-            return `${Date.now()}-blog-${file.originalname}`;
+        // if(match.indexOf(file.mimitype) === -1) 
+        //     return `${Date.now()}-blog-${file.originalname}`;
 
         return {
             bucketName: "photos",

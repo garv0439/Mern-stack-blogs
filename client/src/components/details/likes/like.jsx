@@ -20,15 +20,15 @@ const Favorite = styled(FavoriteIcon)`
     cursor: pointer;
 `;
 
-const LikeButton = ({ postId }) => {
+const LikeButton = ({ likeId }) => {
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
 
-    useEffect(() => {
+        useEffect(() => {
         
         const fetchLikesCount = async () => {
             try {
-                const response = await API.getLikes({ postId: String(postId) });
+                const response = await API.getLikes({ likeId: String(likeId) });
                 setLikesCount(response.data.count || 0);
                 setLiked(response.data.liked || false); 
             } catch (error) {
@@ -37,15 +37,15 @@ const LikeButton = ({ postId }) => {
         };
 
         fetchLikesCount();
-    }, [postId]);
+    }, [likeId]);
 
     const handleLike = async () => {
         try {
             if (liked) {
-                await API.unlikePost({ postId: String(postId) });
+                await API.unlikePost({ likeId: String(likeId) });
                 setLikesCount(likesCount - 1);
             } else {
-                await API.likePost({ postId: String(postId) });
+                await API.likePost({ likeId: String(likeId) });
                 setLikesCount(likesCount + 1);
             }
             setLiked(!liked);

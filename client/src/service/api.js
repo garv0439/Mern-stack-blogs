@@ -91,32 +91,32 @@ const ProcessError = async (error) => {
 
 const API = {
     // Like a post
-    likePost: (postId) =>
+    likePost: (likeId) =>
         axiosInstance({
             method: 'POST',
             url: '/likes', // Adjust the URL to your endpoint
-            data: { postId },
+            data: { likeId },
             headers: {
                 authorization: getAccessToken(),
             }
         }),
     
     // Unlike a post
-    unlikePost: (postId) =>
+    unlikePost: (likeId) =>
         axiosInstance({
             method: 'DELETE',
             url: '/likes', // Adjust the URL to your endpoint
-            data: { postId },
+            data: { likeId },
             headers: {
                 authorization: getAccessToken(),
             }
         }),
     
     // Get likes count for a post
-    getLikesCount: (postId) =>
+    getLikesCount: (likeId) =>
         axiosInstance({
             method: 'GET',
-            url: `/likes/count/${postId}`, // Adjust the URL to your endpoint
+            url: `/likes/count/${likeId}`, // Adjust the URL to your endpoint
             headers: {
                 authorization: getAccessToken(),
             }
