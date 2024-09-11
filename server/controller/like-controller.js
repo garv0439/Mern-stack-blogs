@@ -35,18 +35,4 @@ export const removeLike = async (request, response) => {
     }
 };
 
-// Get the total number of likes for a post
-export const getLikesCount = async (request, response) => {
-    try {
-        const { likeId } = request.body;
 
-        if (!likeId || typeof likeId !== 'string') {
-            return response.status(400).json({ message: "likeId is required and must be a string." });
-        }
-
-        const likesCount = await Like.countDocuments({ likeId });
-        response.status(200).json({ count: likesCount });
-    } catch (error) {
-        response.status(500).json({ message: error.message });
-    }
-};

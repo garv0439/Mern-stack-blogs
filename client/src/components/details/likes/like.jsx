@@ -24,6 +24,7 @@ const LikeButton = ({ likeId }) => {
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
 
+    
         useEffect(() => {
         
         const fetchLikesCount = async () => {

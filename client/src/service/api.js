@@ -110,16 +110,6 @@ const API = {
             headers: {
                 authorization: getAccessToken(),
             }
-        }),
-    
-    // Get likes count for a post
-    getLikesCount: (likeId) =>
-        axiosInstance({
-            method: 'GET',
-            url: `/likes/count/${likeId}`, // Adjust the URL to your endpoint
-            headers: {
-                authorization: getAccessToken(),
-            }
         })
 };
 
