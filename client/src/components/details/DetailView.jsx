@@ -73,7 +73,7 @@ const DetailView = () => {
             }
         }
         fetchData();
-    }, []);
+    }, [id]);
 
     const deleteBlog = async () => {  
         await API.deletePost(post._id);
@@ -83,7 +83,10 @@ const DetailView = () => {
     return (
         <Container>
             <Image src={post.picture || url} alt="post" />
-            <LikeButton />
+
+            <LikeButton postId={post._id} />
+
+            
             <Box style={{ float: 'right' }}>
                 {   
                     account.username === post.username && 

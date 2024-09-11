@@ -2,7 +2,11 @@
 import mongoose from 'mongoose';
 
 const LikeSchema = mongoose.Schema({
-    likeId: {
+    name:{
+        type:String,
+        required:true
+    },
+    postId: {
         type: String,
         required: true,
     }

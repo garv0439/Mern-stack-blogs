@@ -1,18 +1,27 @@
 import Like from '../model/like.js';
 
-// Add a new like to the post
+// Add or remove a like to/from the post
 export const addLike = async (request, response) => {
     try {
-        const { likeId } = request.body;
+        const { postId, name } = request.body; // Include postId and name
 
-        if (!likeId || typeof likeId !== 'string') {
-            return response.status(400).json({ message: "likeId is required and must be a string." });
+        if (!postId || !name) {
+            return response.status(400).json({ message: "postId and name are required." });
         }
 
-        const newLike = new Like({ likeId });
-        await newLike.save();
+        // Check if the user has already liked this post
+        const existingLike = await Like.findOne({ postId, name });
 
-        response.status(200).json('Post liked successfully');
+        if (existingLike) {
+            // If the like exists, remove it
+            await Like.findOneAndDelete({ postId, name });
+            return response.status(200).json('Post unliked successfully');
+        } else {
+            // If the like does not exist, add a new like
+            const newLike = new Like({ postId, name });
+            await newLike.save();
+            return response.status(200).json('Post liked successfully');
+        }
     } catch (error) {
         response.status(500).json({ message: error.message });
     }
@@ -21,10 +30,14 @@ export const addLike = async (request, response) => {
 // Remove a like from a post
 export const removeLike = async (request, response) => {
     try {
-        const { likeId } = request.body;
+        const { postId, name } = request.body; // Include postId and name
 
-        // Ensure likeId is a string and find like by likeId
-        const like = await Like.findOneAndDelete({ likeId: String(likeId) });
+        if (!postId || !name) {
+            return response.status(400).json({ message: "postId and name are required." });
+        }
+
+        // Find and delete the like
+        const like = await Like.findOneAndDelete({ postId, name });
         if (!like) {
             return response.status(404).json({ message: "Like not found" });
         }
@@ -35,4 +48,24 @@ export const removeLike = async (request, response) => {
     }
 };
 
+// Check if the user has already liked a post
+export const checkIfLiked = async (request, response) => {
+    try {
+        const { postId, name } = request.query; // Use query parameters for checking
 
+        if (!postId || !name) {
+            return response.status(400).json({ message: "postId and name are required." });
+        }
+
+        // Check if the like exists
+        const existingLike = await Like.findOne({ postId, name });
+
+        if (existingLike) {
+            return response.status(200).json({ liked: true, count: await Like.countDocuments({ postId }) });
+        } else {
+            return response.status(200).json({ liked: false, count: await Like.countDocuments({ postId }) });
+        }
+    } catch (error) {
+        response.status(500).json({ message: error.message });
+    }
+};

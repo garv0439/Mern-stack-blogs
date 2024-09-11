@@ -5,7 +5,7 @@ import { uploadImage, getImage } from '../controller/image-controller.js';
 import { newComment, getComments, deleteComment } from '../controller/comment-controller.js';
 import { loginUser, singupUser } from '../controller/user-controller.js';
 import { authenticateToken } from '../controller/jwt-controller.js';
-import { addLike, removeLike } from '../controller/like-controller.js';
+import { addLike, removeLike, checkIfLiked } from '../controller/like-controller.js';
 
 import upload from '../utils/upload.js';
     
@@ -33,8 +33,24 @@ router.get('/comments/:id', authenticateToken, getComments);
 router.delete('/comment/delete/:id', authenticateToken, deleteComment);
 
 
-router.post('/like', addLike);
-router.delete('/like', removeLike);
+router.post('/like', authenticateToken, addLike);
+router.delete('/unlike', authenticateToken, removeLike);
+router.get('/getlike', authenticateToken, checkIfLiked);
+// server.js or similar
+
+router.get('/likes/count', async (req, res) => {
+    try {
+        const { postId } = req.query;
+        if (!postId) {
+            return res.status(400).json({ message: 'postId is required' });
+        }
+
+        const likesCount = await Like.countDocuments({ postId });
+        res.json({ count: likesCount });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 
 
 

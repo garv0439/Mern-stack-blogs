@@ -38,6 +38,6 @@ export const SERVICE_URLS = {
     getAllComments: { url: 'comments', method: 'GET', query: true },
     deleteComment: { url: 'comment/delete', method: 'DELETE', query: true },
     likePost: { method: 'POST', url: '/like' },
-    unlikePost: { method: 'DELETE', url: '/like' },
+    unlikePost: { method: 'DELETE', url: '/unlike' },
     // getRefreshToken: { url: '/token', method: 'POST' },
 }
