@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Box, styled } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { API } from '../../../service/api';
+import { API } from '../../../service/api2';
 import { DataContext } from "../../../context/DataProvider";
 
 const FavoriteBorder = styled(FavoriteBorderIcon)`
@@ -25,6 +25,7 @@ const LikeButton = ({ postId }) => {
     const { account } = useContext(DataContext);
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
+    const [loading, setLoading] = useState(false); // Prevent multiple clicks during API call
 
     // Fetch the like status when the component mounts or when postId changes
     useEffect(() => {
@@ -33,15 +34,12 @@ const LikeButton = ({ postId }) => {
                 console.error("postId or account is undefined");
                 return;
             }
-
             try {
                 const response = await API.checkIfLiked({ postId: String(postId), name: account.username });
 
-                if (response?.status === 200) {
+                if (response?.isSuccess) {
                     setLikesCount(response.data.count || 0);
                     setLiked(response.data.liked); // Update the liked state
-                } else {
-                    console.error("Error fetching like status:", response?.message);
                 }
             } catch (error) {
                 console.error("Failed to fetch like status:", error);
@@ -49,12 +47,16 @@ const LikeButton = ({ postId }) => {
         };
 
         // Fetch like status if the account is available
-        if (postId && account) {
+        if (postId && account?.username) {
             fetchLikeStatus();
         }
-    }, [postId, account]); // Ensure that the useEffect runs when postId or account changes
+    }, [postId, account]);
 
     const handleLike = async () => {
+        if (loading) return; // Prevent further actions while API is in progress
+
+        setLoading(true); // Set loading state to prevent multiple clicks
+
         try {
             if (!postId || !account) {
                 console.error("postId or account is undefined");
@@ -70,15 +72,22 @@ const LikeButton = ({ postId }) => {
                 await API.likePost(payload); // Like the post
                 setLikesCount(likesCount + 1); // Increase the count
             }
+
             setLiked(!liked); // Toggle the like state
         } catch (error) {
             console.error("Failed to toggle like:", error);
+        } finally {
+            setLoading(false); // Reset loading state
         }
     };
 
     return (
         <Box display="flex" alignItems="center">
-            {liked ? <Favorite onClick={handleLike} color="error" /> : <FavoriteBorder onClick={handleLike} color="action" />}
+            {liked ? (
+                <Favorite onClick={handleLike} color="error" />
+            ) : (
+                <FavoriteBorder onClick={handleLike} color="action" />
+            )}
             <span>{likesCount} likes</span>
         </Box>
     );

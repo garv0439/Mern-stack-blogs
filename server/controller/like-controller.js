@@ -9,14 +9,7 @@ export const addLike = async (request, response) => {
             return response.status(400).json({ message: "postId and name are required." });
         }
 
-        // Check if the user has already liked this post
-        const existingLike = await Like.findOne({ postId, name });
-
-        if (existingLike) {
-            // If the like exists, remove it
-            await Like.findOneAndDelete({ postId, name });
-            return response.status(200).json('Post unliked successfully');
-        } else {
+         else {
             // If the like does not exist, add a new like
             const newLike = new Like({ postId, name });
             await newLike.save();
@@ -30,6 +23,8 @@ export const addLike = async (request, response) => {
 // Remove a like from a post
 export const removeLike = async (request, response) => {
     try {
+        console.log(request.body)
+        
         const { postId, name } = request.body; // Include postId and name
 
         if (!postId || !name) {
@@ -37,10 +32,14 @@ export const removeLike = async (request, response) => {
         }
 
         // Find and delete the like
-        const like = await Like.findOneAndDelete({ postId, name });
-        if (!like) {
-            return response.status(404).json({ message: "Like not found" });
-        }
+       // Check if the user has already liked this post
+       const existingLike = await Like.findOne({ postId, name });
+
+       if (existingLike) {
+           // If the like exists, remove it
+           await Like.findOneAndDelete({ postId, name });
+           return response.status(200).json('Post unliked successfully');
+       }
 
         response.status(200).json('Post unliked successfully');
     } catch (error) {

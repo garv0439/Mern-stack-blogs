@@ -100,7 +100,7 @@ const Update = () => {
 
     return (
         <Container>
-            <Image src={post.picture || url} alt="post" />
+            {/* <Image src={url} alt="post" /> */}
 
             <StyledFormControl>
                 {/* <label htmlFor="fileInput">
