@@ -87,7 +87,47 @@ const ProcessError = async (error) => {
     }
 }
 
-const API = {};
+const API = {
+    // Like a post
+    likePost: (postId) =>
+        axiosInstance({
+            method: 'POST',
+            url: '/like', // Updated URL to match backend route
+            data: { postId },
+            headers: {
+                authorization: getAccessToken(),
+            }
+        }),
+
+     // Unlike a post
+     unlikePost: async (postId) => {
+        try {
+            console.log("Unliking post with ID:", postId);
+            const response = await axiosInstance({
+                method: 'DELETE',
+                url: '/unlike', // Updated URL to match backend route
+                data: { postId },
+                headers: {
+                    authorization: getAccessToken(),
+                }
+            });
+            console.log("Unlike response:", response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error unliking post:", error);
+            return ProcessError(error); // Adjust according to your error handling
+        }
+    },
+    
+        getLikesCount: (postId) =>
+            axiosInstance({
+                method: 'GET',
+                url: `/likes/count?postId=${postId}`, // Endpoint to get total likes count
+                headers: {
+                    authorization: getAccessToken(),
+                }
+            }),
+};
 
 
 for (const [key, value] of Object.entries(SERVICE_URLS)) {
@@ -95,7 +135,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
         axiosInstance({
             method: value.method,
             url: value.url,
-            data: value.method === 'DELETE' ? {} : body,
+            data: value.method === 'DELETE' && value.url !== '/unlike'? {} : body,
             responseType: value.responseType,
             headers: {
                 authorization: getAccessToken(),

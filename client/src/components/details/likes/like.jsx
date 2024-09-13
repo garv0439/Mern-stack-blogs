@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Box, styled } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { API } from '../../../service/api2';
+import { API } from '../../../service/api';
 import { DataContext } from "../../../context/DataProvider";
 
 const FavoriteBorder = styled(FavoriteBorderIcon)`
